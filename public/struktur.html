@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OSIS | Struktur Organisasi</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- Animate On Scroll Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <meta name="theme-color" content="#111827" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <div class="brand">
+          <div id="site-logo" class="logo"><img src="/uploads/logo.png" alt="Logo OSIS" style="height: 24px; width: auto; display: block;"></div>
+          <span class="divider"></span>
+          <span id="site-name" class="school">OSIS SMA NEGERI 1 BABAT</span>
+        </div>
+        <nav class="menu">
+          <a href="/#beranda">Beranda</a>
+          <a href="/#osis">Profil OSIS</a>
+          <a href="/artikel-semua.html">Artikel</a>
+          <a href="/#agenda">Agenda Kegiatan</a>
+          <a href="/struktur.html">Struktur</a>
+          <a href="/gallery.html">Galeri</a>
+          <a href="/#saran">Saran/Laporan</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="pengurus" class="section">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Profil Pengurus</h2>
+          <div id="pengurus-grid" class="grid"></div>
+        </div>
+      </section>
+
+      <section id="pembina" class="section">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Profil Pembina</h2>
+          <div id="pembina-grid" class="grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p id="footer-text">Memuat footer...</p>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <button id="to-top-btn" class="to-top-btn" title="Kembali ke atas">↑</button>
+    
+    <script src="/shared.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      const $ = (sel, root = document) => root.querySelector(sel);
+
+      async function loadProfiles() {
+        try {
+          const res = await fetch('/api/profiles');
+          if (!res.ok) throw new Error('Gagal memuat profil');
+          const data = await res.json();
+          const { pengurus, pembina } = data; // osis data no longer needed for header
+
+          // Render Pengurus
+          const pengurusGrid = $('#pengurus-grid');
+          if (pengurusGrid) {
+            pengurusGrid.innerHTML = '';
+            (pengurus || []).forEach((p) => {
+              const card = document.createElement('div');
+              card.className = 'card pengurus-card';
+              card.setAttribute('data-aos', 'fade-up');
+              const initials = (p.name || '').split(' ').map((s) => s[0]).join('').slice(0, 2).toUpperCase();
+              const avatarContent = p.photoUrl ?
+                `<img src="${p.photoUrl}" alt="${p.name}">` :
+                `<div class="avatar">${initials}</div>`;
+              card.innerHTML = `
+                ${avatarContent}
+                <div class="card-content">
+                  <div style="font-weight:600">${p.name}</div>
+                  <div style="color:#94a3b8">${p.role}</div>
+                </div>
+              `;
+              pengurusGrid.appendChild(card);
+            });
+          }
+
+          // Render Pembina
+          const pembinaGrid = $('#pembina-grid');
+          if (pembinaGrid) {
+            pembinaGrid.innerHTML = '';
+            (pembina || []).forEach((b) => {
+              const card = document.createElement('div');
+              card.className = 'card pengurus-card';
+              card.setAttribute('data-aos', 'fade-up');
+              const initials = (b.name || '').split(' ').map((s) => s[0]).join('').slice(0, 2).toUpperCase();
+              const avatarContent = b.photoUrl ?
+                `<img src="${b.photoUrl}" alt="${b.name}">` :
+                `<div class="avatar">${initials}</div>`;
+              card.innerHTML = `
+                ${avatarContent}
+                <div class="card-content">
+                  <div style="font-weight:600">${b.name}</div>
+                  <div style="color:#94a3b8">${b.role || ''}</div>
+                </div>
+              `;
+              pembinaGrid.appendChild(card);
+            });
+          }
+        } catch (error) {
+          console.error('Error loading profiles:', error);
+          $('#pengurus-grid').innerHTML = '<p class="hint">Gagal memuat data pengurus.</p>';
+          $('#pembina-grid').innerHTML = '<p class="hint">Gagal memuat data pembina.</p>';
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        AOS.init({
+          duration: 800,
+          once: true,
+        });
+        loadProfiles();
+
+        // Logika untuk tombol "Kembali ke Atas"
+        const toTopBtn = $('#to-top-btn');
+        if (toTopBtn) {
+          window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+              toTopBtn.classList.add('show');
+            } else {
+              toTopBtn.classList.remove('show');
+            }
+          });
+          toTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

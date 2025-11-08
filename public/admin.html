@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin OSIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- Quill.js Rich Text Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <div class="brand">
+          <div id="site-logo" class="logo"><img src="/uploads/logo.png" alt="Logo OSIS" style="height: 24px; width: auto; display: block;"></div>
+          <span class="divider"></span>
+          <span class="school">Admin</span>
+        </div>
+        <nav class="menu">
+          <div id="admin-header-items">
+            <a href="#" data-target="content-artikel" class="active">Artikel</a>
+            <a href="#" data-target="content-agenda">Agenda Kegiatan</a>
+            <a href="#" data-target="content-pengurus">Pengurus</a>
+            <a href="#" data-target="content-pembina">Pembina</a>
+            <a href="#" data-target="content-profil">Profil OSIS</a>
+            <a href="#" data-target="content-galeri">Galeri</a>
+            <a href="#" id="admin-logout">Logout</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <h2 class="section-title">Dashboard Admin</h2>
+
+        <div class="card" style="margin-bottom:16px">
+          <h3 style="margin-top:0">Masuk Admin</h3>
+          <div id="login-form" class="form">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <label>Email<input id="admin-email" type="email" placeholder="admin@osis.com" /></label>
+              <label>Password<input id="admin-password" type="password" placeholder="••••••••" /></label>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center; margin-top: 12px;">
+              <button id="admin-login" class="btn primary">Login</button>
+            </div>
+          </div>
+          <span id="admin-status" class="hint"></span>
+        </div>
+
+        <div id="admin-content" class="admin-layout">
+          <div id="admin-main-content">
+            <div id="content-artikel" class="admin-content-panel active">
+              <div class="card">
+                <h3 style="margin-top:0">Kelola Artikel</h3>
+                <form id="article-form" class="form">
+                  <label>Judul<input name="title" /></label>
+                  <label>Thumbnail (opsional)<input name="thumbnail" type="file" /></label>
+                  <label>Penulis<input name="author" /></label>
+                  <label>Konten</label>
+                  <div id="quill-editor" style="min-height: 200px;"></div>
+                  <input type="hidden" name="content" id="hidden-content-input">
+                  <button class="btn primary" type="submit">Tambah Artikel</button>
+                </form>
+                <ul id="articles" class="posts" style="margin-top:12px"></ul>
+              </div>
+            </div>
+
+            <div id="content-agenda" class="admin-content-panel">
+              <div class="card">
+                <h3 style="margin-top:0">Kelola Agenda Kegiatan</h3>
+                <form id="agenda-form" class="form">
+                  <label>Nama Kegiatan<input name="name" /></label>
+                  <label>Tanggal Mulai<input name="startDate" type="date" /></label>
+                  <label>Tanggal Selesai (opsional)<input name="endDate" type="date" /></label>
+                  <label>Keterangan<textarea name="description" rows="3" required></textarea></label>
+                  <button class="btn primary" type="submit">Tambah Agenda</button>
+                </form>
+                <ul id="agendas" class="posts" style="margin-top:12px"></ul>
+              </div>
+            </div>
+
+            <div id="content-pengurus" class="admin-content-panel">
+              <div class="card">
+                <h3 style="margin-top:0">Kelola Pengurus</h3>
+                <form id="pengurus-form" class="form">
+                  <label>Nama<input name="name" /></label>
+                  <label>Jabatan<input name="role" /></label>
+                  <label>Foto (opsional)<input name="photo" type="file" /></label>
+                  <button class="btn primary" type="submit">Tambah Pengurus</button>
+                </form>
+                <ul id="pengurus" class="posts" style="margin-top:12px"></ul>
+              </div>
+            </div>
+
+            <div id="content-pembina" class="admin-content-panel">
+              <div class="card">
+                <h3 style="margin-top:0">Kelola Pembina</h3>
+                <form id="pembina-form" class="form">
+                  <label>Nama<input name="name" /></label>
+                  <label>Jabatan<input name="role" /></label>
+                  <label>Foto (opsional)<input name="photo" type="file" /></label>
+                  <button class="btn primary" type="submit">Tambah Pembina</button>
+                </form>
+                <ul id="pembina" class="posts" style="margin-top:12px"></ul>
+              </div>
+            </div>
+
+            <div id="content-profil" class="admin-content-panel">
+              <div class="card">
+                <h3 style="margin-top:0">Kelola Profil OSIS</h3>
+                <form id="settings-form" class="form">
+                  <label>Nama OSIS<input name="osis_name" /></label>
+                  <label>Logo OSIS (opsional)<input name="logo" type="file" /></label>
+                  <label>Deskripsi OSIS<textarea name="osis_desc" rows="3"></textarea></label>
+                  <label>Misi OSIS (pisahkan baris per misi)<textarea name="osis_mission" rows="3"></textarea></label>
+                  <button class="btn primary" type="submit">Simpan Profil</button>
+                </form>
+              </div>
+            </div>
+
+            <div id="content-galeri" class="admin-content-panel">
+              <div class="card">
+                <h3 style="margin-top:0">Kelola Galeri</h3>
+                <form id="gallery-form" class="form">
+                  <label>File Gambar<input name="image" type="file" /></label>
+                  <label>Caption (opsional)<input name="caption" /></label>
+                  <button class="btn primary" type="submit">Tambah Gambar</button>
+                </form>
+                <ul id="gallery" class="posts" style="margin-top:12px"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+          <p>© <span id="admin-year"></span> Dibuat oleh TIM DEVELOPER SMABA</p>
+        </div>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+    <button id="to-top-btn" class="to-top-btn" title="Kembali ke atas">↑</button>
+    <!-- Quill.js Script -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="/admin.js" defer></script>
+  </body>
+  </html>

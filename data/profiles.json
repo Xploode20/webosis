@@ -1,0 +1,24 @@
+{
+  "osis": {
+    "name": "OSIS SMA Negeri Contoh",
+    "description": "Organisasi Siswa Intra Sekolah yang menjadi wadah aspirasi dan pengembangan potensi siswa untuk berkarya dan berdampak.",
+    "mission": [
+      "Membangun karakter kepemimpinan dan kolaborasi",
+      "Menyelenggarakan kegiatan positif dan kreatif",
+      "Menjadi jembatan komunikasi siswa dan sekolah"
+    ]
+  },
+  "pengurus": [
+    { "name": "Alya Pratama", "role": "Ketua OSIS", "photoUrl": "" },
+    { "name": "Raka Saputra", "role": "Wakil Ketua", "photoUrl": "" },
+    { "name": "Nadia Putri", "role": "Sekretaris", "photoUrl": "" },
+    { "name": "Dimas Ardi", "role": "Bendahara", "photoUrl": "" }
+  ],
+  "pembina": {
+    "name": "Ibu Siti Rahma, S.Pd",
+    "description": "Pembina OSIS yang membimbing perencanaan program, pengembangan karakter, dan tata kelola organisasi.",
+    "photoUrl": ""
+  }
+}
+
+

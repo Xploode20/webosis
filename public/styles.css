@@ -1,0 +1,675 @@
+:root {
+  /* Skema Warna */
+  --bg: #f6f9ff;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --text: #0f172a;
+  --primary: #3b82f6;
+  --primary-strong: #2563eb;
+  --ring: #3b82f633;
+  --border: #e5e7eb;
+  --radius: 12px; /* Radius sudut yang konsisten */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Tata Letak Dasar & Sticky Footer */
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+  background:
+    radial-gradient(1200px 800px at 10% -10%, #e8f0ff 0%, var(--bg) 50%),
+    linear-gradient(180deg, #f5f8ff, var(--bg));
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  flex-grow: 1; /* Mendorong footer ke bawah */
+}
+
+/* Wrapper untuk halaman dengan paginasi */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Tata letak khusus untuk halaman galeri agar paginasi menempel di bawah */
+.page-wrapper > main > .container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; /* Pastikan kontainer setidaknya setinggi area main */
+}
+
+/* Komponen Umum */
+.container {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: saturate(180%) blur(10px);
+  background: #ffffffcc;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.logo {
+  color: var(--primary-strong);
+  letter-spacing: 0.06em;
+  border: 2px solid #c7d2fe;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+}
+
+.menu a {
+  color: #111827;
+  text-decoration: none;
+  margin-left: 18px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* Item menu admin di header */
+.menu #admin-header-items {
+  display: none; /* Sembunyikan secara default */
+  align-items: center;
+  gap: 8px;
+}
+
+/* Gaya spesifik untuk item menu di header admin */
+.menu #admin-header-items a {
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.menu #admin-header-items #admin-logout {
+  color: #ef4444; /* Beri warna merah untuk menandakan aksi keluar */
+}
+
+.menu a:hover { color: var(--primary-strong); }
+
+/* Bagian Hero */
+.hero {
+  padding: 72px 0 48px;
+}
+
+.hero .container {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.1;
+  margin: 0 0 14px;
+}
+
+.hero p {
+  color: #334155;
+  margin: 0 0 22px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 12px;
+}
+
+.hero-art {
+  position: relative;
+  height: 280px;
+}
+
+.orb {
+  position: absolute;
+  right: 8%;
+  top: 12%;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at 30% 30%, #93c5fd, #60a5fa 60%, transparent 65%),
+              radial-gradient(circle at 70% 70%, #a7f3d0, transparent 60%);
+  filter: blur(6px) saturate(120%);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.orb.small {
+  width: 120px;
+  height: 120px;
+  top: 50%;
+  right: 30%;
+  opacity: 0.5;
+}
+
+/* Bagian & Judul */
+.section {
+  padding: 56px 0;
+}
+
+.section-title {
+  margin: 0 0 18px;
+  font-size: 24px;
+}
+
+.section-subtitle {
+  margin: 0 0 12px;
+}
+
+/* Kartu (Card) */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 10px 30px #0000000d, 0 2px 6px #0000000f;
+}
+
+.osis-card .list {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+/* Spesifik untuk grid artikel di halaman utama */
+#articles.grid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+/* Spesifik untuk halaman "Semua Artikel" (4 kolom) */
+#all-articles-grid.grid {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+/* Spesifik untuk grid galeri */
+#gallery-grid {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Buat kartu lebih besar */
+  margin-bottom: 32px; /* Beri jarak ke tombol paginasi di bawahnya */
+}
+
+#gallery-grid .card img {
+  width: 100%;
+  aspect-ratio: 1 / 1 !important; /* Paksa gambar menjadi persegi (1:1) */
+  object-fit: cover;   /* Isi area persegi tanpa distorsi (gambar akan ter-crop) */
+}
+
+.pengurus-card {
+  padding: 0; /* Hapus padding agar gambar bisa penuh */
+  overflow: hidden; /* Jaga agar sudut gambar tetap di dalam kartu */
+  
+}
+.pengurus-card img, .pengurus-card .avatar {
+  width: 100%;
+  height: 280px; /* Beri tinggi yang lebih besar seperti galeri */
+  object-fit: cover; /* Pastikan gambar tidak gepeng */
+  display: block;
+  border-radius: 0; /* Hapus radius individual */
+  border: none; /* Hapus border individual */
+  border-bottom: 1px solid var(--border); /* Beri pemisah */
+}
+
+.pengurus-card .card-content {
+  padding: 16px; /* Beri padding hanya pada area teks */
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  color: #3730a3;
+  font-weight: 700;
+  font-size: 48px; /* Perbesar ukuran font inisial */
+}
+
+/* Tata Letak & Formulir */
+.two-col {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 20px;
+}
+
+ul.posts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.post-item {
+  display: flex; /* Ubah ke flexbox untuk kontrol vertikal */
+  flex-direction: column; /* Susun item secara vertikal */
+  gap: 6px;
+}
+
+.share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.share-btn {
+  /* Ubah menjadi tombol ikon melingkar */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.post-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.post-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Tombol Berbagi Artikel */
+
+/* Paginasi */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
+  margin-top: auto; /* Dorong paginasi ke bawah di dalam flex container */
+}
+
+.pagination button {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.pagination button.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* Efek Hover dan Transisi untuk semua kartu interaktif */
+.post-item, 
+.pengurus-card, 
+#gallery-grid .card, 
+#articles .card,
+#all-articles-grid .post-item,
+#pengurus-grid .pengurus-card, /* Tambahkan target untuk halaman struktur */
+#pembina-grid .pengurus-card { /* Tambahkan target untuk halaman struktur */
+  transition: transform 0.2s ease-in-out;
+}
+
+.post-item:hover,
+.pengurus-card:hover,
+#gallery-grid .card:hover,
+#articles .card:hover,
+#all-articles-grid .post-item:hover,
+#pengurus-grid .pengurus-card:hover, /* Tambahkan target untuk halaman struktur */
+#pembina-grid .pengurus-card:hover { /* Tambahkan target untuk halaman struktur */
+  transform: scale(1.03);
+  z-index: 5;
+}
+
+.form label {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+input, select, textarea {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 8px;
+  outline: none;
+}
+
+/* Wrapper untuk menata <select> */
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Sembunyikan panah default dan sesuaikan tampilan <select> */
+.select-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Buat panah kustom menggunakan pseudo-element */
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%) rotate(45deg);
+  width: 6px;
+  height: 6px;
+  border-bottom: 2px solid var(--muted);
+  border-right: 2px solid var(--muted);
+  pointer-events: none; /* Pastikan panah tidak bisa diklik */
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 6px var(--ring);
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: var(--card);
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(180deg, var(--primary), var(--primary-strong));
+  border-color: #0000;
+  color: white;
+}
+
+.btn.ghost { background: var(--card); }
+
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0 48px;
+  padding-top: 48px;
+  color: var(--muted);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.footer-column p {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.footer-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.social-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 14px;
+  display: inline-flex; /* Jadikan flex container */
+  align-items: center; /* Sejajarkan ikon dan teks secara vertikal */
+  gap: 8px; /* Beri jarak antara ikon dan teks */
+}
+
+.social-links a:hover {
+  color: var(--text); /* Beri efek hover */
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  text-align: center;
+  font-size: 12px;
+}
+
+/* Notifikasi Toast & Modal */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--text);
+  color: #e5e7eb;
+  border: 1px solid #11182733;
+  padding: 12px 14px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px #00000055;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: 200ms ease;
+  pointer-events: none;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Modal untuk Pratinjau Gambar */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.modal-content img {
+  display: block;
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: var(--radius);
+}
+
+.modal-close {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  color: white;
+  background: #333;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+/* Admin Page Visibility Control */
+#admin-content {
+  display: none;
+}
+body.admin-logged-in #admin-content {
+  display: block;
+}
+body.admin-logged-in #login-form {
+  display: none;
+}
+
+/* Tampilkan item menu admin di header saat login */
+body.admin-logged-in .menu #admin-header-items {
+  display: flex;
+}
+
+/* Beri jarak antar kartu di halaman admin */
+#admin-content > .card:not(:last-child) {
+  margin-bottom: 24px;
+}
+
+/* Show logout button when logged in */
+body.admin-logged-in #admin-logout {
+  display: inline-block;
+}
+
+/* Tombol Kembali ke Atas (Scroll to Top) */
+.to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+.to-top-btn.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Media Queries untuk Responsivitas */
+@media (max-width: 880px) {
+  .hero .container,
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+  .hero-art {
+    height: 140px;
+  }
+  .menu {
+    display: none; /* Sembunyikan menu di layar kecil untuk sementara */
+    /* Di proyek nyata, ini bisa diganti dengan menu hamburger */
+  }
+}
+
+/* Paksa nonaktifkan klik pada tanggal di kalender */
+.v-calendar .v-calendar-body .v-calendar-day {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Tata Letak Halaman Admin Baru */
+.admin-layout {
+  margin-top: 24px; /* Beri jarak dari kartu login di atasnya */
+}
+
+#admin-main-content {
+  flex-grow: 1;
+  min-width: 0; /* Mencegah flex item meluap */
+}
+
+.admin-content-panel {
+  display: none;
+}
+
+.admin-content-panel.active {
+  display: block;
+}
+
+/* Perbaikan untuk Quill.js Editor */
+.ql-editor {
+  min-height: 200px; /* Pastikan area ketik memiliki tinggi minimal */
+  background-color: white; /* Beri background putih agar tidak transparan */
+  font-size: 16px; /* Sesuaikan ukuran font agar mudah dibaca */
+}
+
+.ql-toolbar.ql-snow {
+  border-radius: 8px 8px 0 0; /* Beri sudut membulat pada toolbar */
+}
+
+/* Beri jarak pada tombol submit di form artikel */
+#article-form button[type="submit"] {
+  margin-top: 16px;
+}

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OSIS | Beranda</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- Local Vanilla JS Calendar -->
+    <link href="/vanilla-js-calendar.min.css" rel="stylesheet">
+    <!-- Animate On Scroll Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <meta name="theme-color" content="#111827" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <div class="brand">
+          <div id="site-logo" class="logo"><img src="/uploads/logo.png" alt="Logo OSIS" style="height: 24px; width: auto; display: block;"></div>
+          <span class="divider"></span>
+          <span id="site-name" class="school">OSIS SMA NEGERI 1 BABAT</span>
+        </div>
+        <nav class="menu">
+          <a href="#beranda">Beranda</a>
+          <a href="#osis">Profil OSIS</a>
+          <a href="/artikel-semua.html">Artikel</a>
+          <a href="#agenda">Agenda Kegiatan</a>
+          <a href="/struktur.html">Struktur</a>
+          <a href="/gallery.html">Galeri</a>
+          <a href="#saran">Saran/Laporan</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="beranda" class="hero">
+        <div class="container">
+          <div class="hero-content" data-aos="fade-right">
+            <h1>Ruang Berkarya dan Berkolaborasi</h1>
+            <p>
+              OSIS menjadi rumah bagi ide-ide kreatif, wadah aspirasi, dan gerak nyata
+              untuk menghadirkan pengalaman sekolah yang lebih bermakna.
+            </p>
+            <div class="hero-cta">
+              <a class="btn primary" href="#agenda">Lihat Agenda</a>
+              <a class="btn ghost" href="#saran">Kirim Saran</a>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true" data-aos="fade-left">
+            <div class="orb"></div>
+            <div class="orb small"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="osis" class="section">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Profil OSIS</h2>
+          <div class="card osis-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="osis-text">
+              <h3 id="osis-name">OSIS</h3>
+              <p id="osis-desc"></p>
+              <ul id="osis-mission" class="list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="artikel" class="section">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Artikel</h2>
+          <ul id="articles" class="grid" style="list-style: none; padding: 0;"></ul>
+          <div style="text-align: center; margin-top: 24px;" data-aos="fade-up">
+            <a href="/artikel-semua.html" class="btn">Lihat Semua Artikel</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="agenda" class="section">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Agenda Kegiatan</h2>
+          <div id="calendar-container" style="min-height: 400px;" data-aos="fade-up" data-aos-delay="100"></div>
+        </div>
+      </section>
+      <section id="agenda-details-wrapper" class="section" style="padding-top: 0; display: none;">
+        <div class="container card" id="agenda-details" data-aos="fade-up" data-aos-delay="100"></div>
+      </section>
+
+      <section id="saran" class="section">
+        <div class="container two-col" data-aos="fade-up">
+          <div data-aos="fade-right" data-aos-delay="100">
+            <h2 class="section-title">Saran & Laporan</h2>
+            <p>Kami terbuka terhadap masukan. Sampaikan saran atau laporan Anda melalui formulir berikut.</p>
+          </div>
+          <div>
+            <form id="report-form" class="form">
+              <label>
+                Nama (opsional)
+                <input type="text" name="name" placeholder="Nama Anda" />
+              </label>
+              <label>
+                Kontak (opsional)
+                <input type="text" name="contact" placeholder="Email/HP" />
+              </label>
+              <label>
+                Tipe
+                <div class="select-wrapper">
+                  <select name="type">
+                    <option value="saran">Saran</option>
+                    <option value="laporan">Laporan</option>
+                  </select>
+                </div>
+              </label>
+              <label>
+                Pesan
+                <textarea name="message" rows="5" placeholder="Tulis pesan Anda..." required></textarea>
+              </label>
+              <button class="btn primary" type="submit">Kirim</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <!-- Konten footer akan di-render oleh shared.js -->
+      </div>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <button id="to-top-btn" class="to-top-btn" title="Kembali ke atas">↑</button>
+    
+    <script src="/shared.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/vanilla-js-calendar.min.js"></script>
+    <script src="/app.js" defer></script>
+  </body>
+  </html>

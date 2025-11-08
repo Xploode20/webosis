@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Galeri | OSIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- Animate On Scroll Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <div class="brand">
+          <div id="site-logo" class="logo"><img src="/uploads/logo.png" alt="Logo OSIS" style="height: 24px; width: auto; display: block;"></div>
+          <span class="divider"></span>
+          <span id="site-name" class="school">OSIS SMA NEGERI 1 BABAT</span>
+        </div>
+        <nav class="menu">
+          <a href="/#beranda">Beranda</a>
+          <a href="/#osis">Profil OSIS</a>
+          <a href="/artikel-semua.html">Artikel</a>
+          <a href="/#agenda">Agenda Kegiatan</a>
+          <a href="/struktur.html">Struktur</a>
+          <a href="/gallery.html">Galeri</a>
+          <a href="/#saran">Saran/Laporan</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="page-wrapper">
+      <main class="section">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Galeri Kegiatan</h2>
+          <p class="hint" data-aos="fade-up" data-aos-delay="100">Klik pada gambar untuk melihat pratinjau.</p>
+          <div class="grid" id="gallery-grid"></div>
+          <div id="pagination-controls" class="pagination"></div>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container">
+          <p id="footer-text">Memuat footer...</p>
+        </div>
+      </footer>
+    </div>
+
+    <button id="to-top-btn" class="to-top-btn" title="Kembali ke atas">↑</button>
+
+    <!-- Modal untuk pratinjau gambar -->
+    <div id="image-modal" class="modal-backdrop">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <img id="modal-image" src="" alt="Preview Gambar">
+      </div>
+    </div>
+
+    <script src="/shared.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      // State untuk paginasi
+      let allGalleryItems = [];
+      let currentPage = 1;
+      const itemsPerPage = 6;
+
+      function renderGalleryPage(page) {
+        currentPage = page;
+        const grid = document.getElementById('gallery-grid');
+        const paginationControls = document.getElementById('pagination-controls');
+        grid.innerHTML = '';
+        paginationControls.innerHTML = '';
+
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const paginatedItems = allGalleryItems.slice(startIndex, endIndex);
+
+        paginatedItems.forEach((g, index) => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.setAttribute('data-aos', 'fade-up');
+          card.setAttribute('data-aos-delay', 200 + (50 * index)); // Beri jeda awal sebelum memulai animasi bertingkat
+          const img = document.createElement('img');
+          img.src = g.url;
+          img.alt = g.caption || 'Foto kegiatan OSIS';
+          img.style.borderRadius = 'var(--radius)';
+          const cap = document.createElement('div');
+          cap.className = 'hint';
+          cap.textContent = g.caption || '';
+          card.appendChild(img);
+          if (g.caption) card.appendChild(cap);
+          grid.appendChild(card);
+        });
+
+        // Render tombol paginasi
+        const totalPages = Math.ceil(allGalleryItems.length / itemsPerPage);
+        for (let i = 1; i <= totalPages; i++) {
+          const button = document.createElement('button');
+          button.textContent = i;
+          if (i === currentPage) {
+            button.classList.add('active');
+          }
+          button.addEventListener('click', () => renderGalleryPage(i));
+          paginationControls.appendChild(button);
+        }
+
+        // Refresh AOS untuk mendeteksi elemen baru
+        setTimeout(() => AOS.refresh(), 50);
+      }
+
+      async function loadGallery() {
+        const res = await fetch('/api/gallery');
+        allGalleryItems = await res.json();
+        renderGalleryPage(1); // Tampilkan halaman pertama saat data dimuat
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        AOS.init({
+          duration: 1000,
+          once: true,
+        });
+        loadGallery();
+
+        // Logika untuk Modal Gambar
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-image');
+        const grid = document.getElementById('gallery-grid');
+        const closeBtn = document.querySelector('.modal-close');
+
+        grid.addEventListener('click', (e) => {
+          // Pastikan yang diklik adalah gambar di dalam kartu
+          if (e.target.tagName === 'IMG') {
+            modal.style.display = 'flex';
+            modalImg.src = e.target.src;
+          }
+        });
+
+        const closeModal = () => {
+          modal.style.display = 'none';
+          modalImg.src = ''; // Hapus src untuk menghentikan loading jika ada
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+          // Tutup modal jika yang diklik adalah area backdrop (bukan gambar)
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+
+        // Logika untuk tombol "Kembali ke Atas"
+        const toTopBtn = document.getElementById('to-top-btn');
+        if (toTopBtn) {
+          window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+              toTopBtn.classList.add('show');
+            } else {
+              toTopBtn.classList.remove('show');
+            }
+          });
+          toTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+      });
+    </script>
+  </body>
+  </html>
